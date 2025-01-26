@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.33-latest
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8080:8080"
+    depends_on:
+      - opa
+      - service1
+      - service2
+
+  opa:
+    image: openpolicyagent/opa:latest
+    volumes:
+      - ./policy.rego:/policy/policy.rego
+      - ./data.json:/policy/data.json
+    ports:
+      - "8181:8181"
+    command: [ "run", "--server", "--log-level=debug", "/policy" ]
+
+  service1:
+    image: ealen/echo-server
+    environment:
+      - PORT=80
+
+  service2:
+    image: ealen/echo-server
+    environment:
+      - PORT=80

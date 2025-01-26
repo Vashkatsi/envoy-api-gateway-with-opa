@@ -1,0 +1,43 @@
+{
+  "resources": [
+    {
+      "pattern": "^/service2/.*$",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "roles": [
+        "admin",
+        "manager"
+      ]
+    },
+    {
+      "pattern": "^/service1/.*$",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "roles": [
+        "user"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "role": "admin",
+      "inherits": [
+        "manager"
+      ]
+    },
+    {
+      "role": "manager",
+      "inherits": [
+        "user"
+      ]
+    },
+    {
+      "role": "user",
+      "inherits": []
+    }
+  ]
+}
